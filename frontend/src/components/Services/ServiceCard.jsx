@@ -16,9 +16,9 @@ const ServiceCard = ({ item, index }) => {
       <div className="flex items-center justify-between mt-[30px]">
         <Link
           to="/doctors"
-          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] items-center justify-center group hover:bg-primaryColor hover:border-none"
+          className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] flex items-center justify-center group hover:bg-primaryColor hover:border-none"
         >
-          <BsArrowRight className="w-6 h-10 group-hover:text-white" />
+          <BsArrowRight className="w-6 h-5 group-hover:text-white" />
         </Link>
         <span
           className="w-[44px] h-[32px] flex justify-center text-center text-[22px] leading-[30px] font-[600]"
