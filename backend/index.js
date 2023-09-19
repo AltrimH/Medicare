@@ -1,13 +1,45 @@
-const path = require('path');
-const express = require('express');
+import express from "express";
+import cookieParser from "cookie-parser";
+import cors from "cors";
+import mongoose from "mongoose";
+import dotenv from "dotenv";
+import authRoute from "./routes/auth.js";
+
+dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
-const PORT = process.env.PORT || 6000;
-const HOST = process.env.HOST || 'http://localhost:';
+const corsOptions = {
+  origin: true,
+};
 
-app.use(express.static(path.join(__dirname, "public")));
+app.get("/", (req, res) => {
+  res.send("API is working");
+});
+
+// database connection
+mongoose.set("strictQuery", false);
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("MongoDB connected");
+  } catch (err) {
+    console.log("MongoDB failed to connect");
+  }
+};
+
+// middleware
+app.use(express.json());
+app.use(cookieParser());
+app.use(cors(corsOptions));
+app.use("/api/v1/auth", authRoute);
 
 app.listen(PORT, () => {
-    console.log(`Server is running on: ${HOST}${PORT}`);
-})
+  connectDB();
+  console.log(`Server is running on: ${PORT}`);
+});

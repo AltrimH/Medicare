@@ -96,21 +96,19 @@ const Signup = () => {
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value=""></option>
-                    <option value="patient">Patient</option>
                     <option value="doctor">Doctor</option>
+                    <option value="patient">Patient</option>
                   </select>
                 </label>
 
                 <label className="text-headingColor font-bold text-[16px] leading-7">
                   Gender:
                   <select
-                    name="role"
+                    name="gender"
                     value={formData.gender}
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value=""></option>
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                     <option value="other">Other</option>
