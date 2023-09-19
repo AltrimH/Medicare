@@ -26,32 +26,32 @@ const navLinks = [
 ];
 
 const Header = () => {
-  const headerRef = useRef(null);
+  // const headerRef = useRef(null);
   const menuRef = useRef(null);
 
-  const handleStickyHeader = () => {
-    window.addEventListener("scroll", () => {
-      if (
-        document.body.scrollTop > 80 ||
-        document.documentElement.scrollTop > 80 
-      ) {
-        headerRef.current.classList.add("sticky__header");
-      } else {
-        headerRef.current.classList.remove("sticky__header");
-      }
-    });
-  };
+  // const handleStickyHeader = () => {
+  //   window.addEventListener("scroll", () => {
+  //     if (
+  //       document.body.scrollTop > 80 ||
+  //       document.documentElement.scrollTop > 80 
+  //     ) {
+  //       headerRef.current.classList.add("sticky__header");
+  //     } else {
+  //       headerRef.current.classList.remove("sticky__header");
+  //     }
+  //   });
+  // };
 
-  useEffect(() => {
-    handleStickyHeader();
+  // useEffect(() => {
+  //   handleStickyHeader();
 
-    return () => window.removeEventListener("scroll", handleStickyHeader);
-  });
+  //   return () => window.removeEventListener("scroll", handleStickyHeader);
+  // });
 
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
 
   return (
-    <header className="flex items-center header" ref={headerRef}>
+    <header className="flex items-center header">
       <div className="container">
         <div className="flex items-center justify-between">
           {/*  logo */}

@@ -3,8 +3,12 @@ import ServiceCard from "../components/Services/ServiceCard";
 
 const Services = () => {
   return (
-    <section>
+    <section className="px-20 py-20">
       <div className="container">
+        <h3 className="text-headingColor text-[38px] font-semibold text-center pb-20">
+          Some of <span className="text-primaryColor">Services</span> we do
+          best!
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-[30px]">
           {services.map((item, index) => (
             <ServiceCard item={item} index={index} key={index} />

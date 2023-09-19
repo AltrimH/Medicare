@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
 import DoctorAbout from './DoctorAbout'
 import Feedback from './Feedback'
+import SidePanel from "./SidePanel";
 
 import doctorImg from "../../assets/images/doctor-img02.png";
 import starIcon from '../../assets/images/Star.png'
@@ -70,6 +71,10 @@ const DoctorDetails = () => {
                 {tab === 'about' && <DoctorAbout />}
                 {tab === 'feedback' && <Feedback />}
             </div>
+          </div>
+
+          <div>
+            <SidePanel />
           </div>
         </div>
       </div>
