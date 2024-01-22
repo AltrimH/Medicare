@@ -41,7 +41,7 @@ const SidePanel = () => {
         </ul>
       </div>
 
-      <button className="w-full px-2 rounded-md btn">Bool Appointment</button>
+      <button className="w-full px-2 rounded-md btn">Book Appointment</button>
     </div>
   );
 };

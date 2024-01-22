@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useContext } from "react";
 import { NavLink, Link } from "react-router-dom";
+import { authContext } from "../../context/authContext";
 
 import logo from "../../assets/images/logo.png";
-import userImg from "../../assets/images/avatar-icon.png";
 
 import { BiMenu } from "react-icons/bi";
 
@@ -26,6 +26,8 @@ const navLinks = [
 ];
 
 const Header = () => {
+  const { user, role, token } = useContext(authContext);
+
   // const headerRef = useRef(null);
   const menuRef = useRef(null);
 
@@ -33,7 +35,7 @@ const Header = () => {
   //   window.addEventListener("scroll", () => {
   //     if (
   //       document.body.scrollTop > 80 ||
-  //       document.documentElement.scrollTop > 80 
+  //       document.documentElement.scrollTop > 80
   //     ) {
   //       headerRef.current.classList.add("sticky__header");
   //     } else {
@@ -42,13 +44,18 @@ const Header = () => {
   //   });
   // };
 
-  // useEffect(() => {
-  //   handleStickyHeader();
-
-  //   return () => window.removeEventListener("scroll", handleStickyHeader);
-  // });
+  useEffect(() => {
+    // handleStickyHeader();
+    // return () => window.removeEventListener("scroll", handleStickyHeader);
+  });
 
   const toggleMenu = () => menuRef.current.classList.toggle("show__menu");
+
+  const { dispatch } = useContext(authContext);
+  
+  const handleLogout = () => {
+    dispatch({ type: "LOGOUT" });
+  };
 
   return (
     <header className="flex items-center header">
@@ -56,7 +63,9 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/*  logo */}
           <div>
-            <img src={logo} alt="logo" />
+            <NavLink to="/home">
+              <img src={logo} alt="logo" />
+            </NavLink>
           </div>
 
           {/*  menu */}
@@ -81,24 +90,41 @@ const Header = () => {
 
           {/* nav right */}
           <div className="flex items-center gap-4">
-            <div className="hidden">
-              <Link to="/">
-                <figure className="w-[35px] h-[35px] rounded-full">
-                  <img
-                    src={userImg}
-                    alt="User Image"
-                    className="w-full rounded-full"
-                  />
-                </figure>
+            {token && user ? (
+              <div>
+                <Link
+                  className="flex items-center gap-4"
+                  to={`${
+                    role === "doctor"
+                      ? "/doctors/profile/me"
+                      : "/users/profile/me"
+                  }`}
+                >
+                  <figure className="w-[45px] h-[45px] rounded-full">
+                    <img
+                      src={user?.photo}
+                      alt="User Image"
+                      className="w-full h-full rounded-full"
+                    />
+                  </figure>
+                  <button
+                    onClick={handleLogout}
+                    className="w-24 bg-primaryColor hover:bg-[#181A1E] p-2 text-[14px] leading-7 rounded-md text-white"
+                  >
+                    Logout
+                  </button>
+                  {/* <h2>
+                    {user?.name}
+                  </h2> */}
+                </Link>
+              </div>
+            ) : (
+              <Link to="/login">
+                <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
+                  Login
+                </button>
               </Link>
-            </div>
-
-            <Link to="/login">
-              <button className="bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]">
-                Login
-              </button>
-            </Link>
-
+            )}
             <span className="md:hidden" onClick={toggleMenu}>
               <BiMenu className="w-6 h-6 cursor-pointer" />
             </span>

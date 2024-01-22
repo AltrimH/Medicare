@@ -1,9 +1,21 @@
 import DoctorCard from "../../components/Doctors/DoctorCard";
-import { doctors } from "../../assets/data/doctors.js";
+import useFetchData from "../../hooks/useFetchData.js";
 
-import Testimonial from '../../components/Testimonial/Testimonial'
+import { BASE_URL } from "../../config.js";
+import Error from "../../components/Error/Error.jsx";
+import Loading from "../../components/Loader/Loading.jsx";
+
+// import { doctors } from "../../assets/data/doctors.js";
+
+import Testimonial from "../../components/Testimonial/Testimonial";
 
 const Doctors = () => {
+  const {
+    data: doctors,
+    loading,
+    error,
+  } = useFetchData(`${BASE_URL}/doctors/`);
+
   return (
     <>
       <section className="bg-[#fff9ea] py-20">
@@ -22,26 +34,31 @@ const Doctors = () => {
         </div>
       </section>
 
-      <section className="py-20">
-        <div className="container">
-          <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-            {doctors.map((doctor) => (
-              <DoctorCard key={doctor.id} doctor={doctor} />
-            ))}
+      {loading && !error && <Loading />}
+      {error && !loading && <Error errMessage={error} />}
+      {!loading && !error && (
+        <section className="py-20">
+          <div className="container">
+            <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
+              {doctors.map((doctor) => (
+                <DoctorCard key={doctor.id} doctor={doctor} />
+              ))}
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
+      )}
 
       <section className="py-10">
         <div className="container">
-            <div className="xl:w-[470px] mx-auto">
-                <h2 className="text-center heading">What our patients say</h2>
-                <p className="text-center text__para">
-                    World-class care for everyone. Our health System offers unmatched, expert health care.
-                </p>
-            </div>
+          <div className="xl:w-[470px] mx-auto">
+            <h2 className="text-center heading">What our patients say</h2>
+            <p className="text-center text__para">
+              World-class care for everyone. Our health System offers unmatched,
+              expert health care.
+            </p>
+          </div>
 
-            <Testimonial />
+          <Testimonial />
         </div>
       </section>
     </>

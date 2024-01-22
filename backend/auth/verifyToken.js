@@ -1,4 +1,6 @@
 import jwt from "jsonwebtoken";
+
+import Admin from "../models/AdminSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 import User from "../models/UserSchema.js";
 
@@ -41,9 +43,13 @@ export const restrict = (roles) => async (req, res, next) => {
   const userId = req.userId;
   let user;
 
+  const admin = await Admin.findById(userId);
   const patient = await User.findById(userId);
   const doctor = await Doctor.findById(userId);
 
+  if (admin) {
+    user = admin;
+  }
   if (patient) {
     user = patient;
   }

@@ -1,4 +1,6 @@
 import Doctor from "../models/DoctorSchema.js";
+import Booking from "../models/BookingSchema.js";
+import Reviews from "../models/ReviewSchema.js";
 
 export const getDoctors = async (req, res) => {
   try {
@@ -92,5 +94,49 @@ export const deleteDoctor = async (req, res) => {
       success: false,
       message: "Failed To Delete Doctor",
     });
+  }
+};
+
+export const getDoctorProfile = async (req, res) => {
+  const doctorId = req.userId;
+
+  try {
+    const doctor = await Doctor.findById(doctorId);
+    if (!doctor) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Doctor not found" });
+    }
+
+    const { password, ...rest } = doctor._doc;
+    const appointments = await Booking.find({ doctor: doctorId });
+
+    res.status(200).json({
+      success: true,
+      message: "Profile info is getting",
+      data: { ...rest, appointments },
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ success: false, message: "Something went wrong, cannot get" });
+  }
+};
+
+export const myReviews = async (req, res) => {
+  try {
+    // retrieve reviews from reviews for a specific doctor
+    const reviews = await Reviews.find({ doctor: req.userId });
+    
+    res.status(200).json({
+      success: true,
+      message: "Reviews are getting",
+      data: reviews
+    })
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong, cannot get"
+    })
   }
 };

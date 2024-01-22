@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const UserSchema = new mongoose.Schema({
+const adminSchema = new mongoose.Schema({
   email: {
     type: String,
     required: true,
@@ -14,30 +14,18 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  phone: {
-    type: Number,
-  },
   photo: {
     type: String,
   },
   role: {
     type: String,
-    enum: ["patient", "doctor"],
+    enum: ["admin", "patient", "doctor"],
     // default: "patient",
   },
   gender: {
     type: String,
     enum: ["male", "female", "other"],
-  },
-  bloodType: {
-    type: String,
-  },
-  appointments: [
-    {
-      type: mongoose.Types.ObjectId,
-      ref: "Appointment",
-    },
-  ],
+  }
 });
 
-export default mongoose.model("User", UserSchema);
+export default mongoose.model("Admin", adminSchema);

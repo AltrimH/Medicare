@@ -1,15 +1,56 @@
 import { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 
+// import HashLoader from "react-spinners/HashLoader";
+import { BASE_URL, token } from "../../config";
+import { toast } from "react-toastify";
+import { useParams } from "react-router-dom";
+
 const FeedbackForm = () => {
   const [rating, setRating] = useState(0);
   const [hover, setHover] = useState(0);
   const [reviewText, setReviewText] = useState("");
+  // const [userId, setUserId] = useState();
+
+  const user = JSON.parse(localStorage.getItem("user"));
+  const doctorId = useParams();
+  const doctor = doctorId.id;
 
   const handleSubmitReview = async (e) => {
     e.preventDefault();
 
+    const data = {
+      doctor,
+      user,
+      reviewText,
+      rating,
+    };
+
+    console.log(data, token);
+
     // api later to use thanks
+    try {
+      const res = await fetch(`${BASE_URL}/reviews`, {
+        method: "post",
+        headers: {
+          Authorization: "Bearer " + token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      const { message } = await res.json();
+
+      if (!res.ok) {
+        throw new Error(message);
+      }
+
+      toast.success(message);
+      setReviewText('')
+      setRating(0)
+    } catch (error) {
+      toast.error(error.message);
+    }
   };
 
   return (

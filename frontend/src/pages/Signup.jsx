@@ -1,7 +1,6 @@
 import signupImg from "../assets/images/signup.gif";
-import avatar from "../assets/images/doctor-img01.png";
 import { toast } from "react-toastify";
-import HashLoader from 'react-spinners/HashLoader'
+import HashLoader from "react-spinners/HashLoader";
 
 import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import { BASE_URL } from "../config";
 
 const Signup = () => {
   const [selectedFile, setSelectedFile] = useState(null);
+  // eslint-disable-next-line no-unused-vars
   const [previewURL, setPreviewURL] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -76,7 +76,7 @@ const Signup = () => {
               <img
                 className="w-full rounded-l-lg"
                 src={signupImg}
-                alt="signup Img"
+                alt="Registered Image"
               />
             </figure>
           </div>
@@ -133,8 +133,8 @@ const Signup = () => {
                     onChange={handleInputChange}
                     className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                   >
-                    <option value="doctor">Doctor</option>
                     <option value="patient">Patient</option>
+                    <option value="doctor">Doctor</option>
                   </select>
                 </label>
 
@@ -187,7 +187,7 @@ const Signup = () => {
                   className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-4"
                   type="submit"
                 >
-                  { loading ? <HashLoader size={35} color="#fff" /> : 'Register'}
+                  {loading ? <HashLoader size={35} color="#fff" /> : "Register"}
                 </button>
               </div>
 
