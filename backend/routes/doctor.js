@@ -6,9 +6,11 @@ import {
   deleteDoctor,
   getDoctorProfile,
   myReviews,
+  myQualifications
 } from "../controllers/doctorController.js";
 
 import reviewRouter from "./review.js";
+import qualificationRoute from "./qualification.js";
 
 import { authenticate, restrict } from "../auth/verifyToken.js";
 
@@ -16,6 +18,7 @@ const router = express.Router();
 
 //nested route
 router.use("/:doctorId/reviews", reviewRouter);
+router.use("/:doctorId/qualifications", qualificationRoute);
 
 router.get("/", getDoctors);
 router.get("/:id", getDoctor);
@@ -27,6 +30,12 @@ router.get(
   authenticate,
   restrict(["doctor"]),
   myReviews
+);
+router.get(
+  "/qualifications/my-qualification",
+  authenticate,
+  restrict(["doctor"]),
+  myQualifications
 );
 
 export default router;

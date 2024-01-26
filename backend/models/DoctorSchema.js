@@ -15,7 +15,7 @@ const DoctorSchema = new mongoose.Schema({
     required: true,
   },
   phone: {
-    type: Number,
+    type: String,
   },
   photo: {
     type: String,
@@ -32,7 +32,7 @@ const DoctorSchema = new mongoose.Schema({
     type: String,
   },
   qualifications: {
-    type: Array,
+    type: Object,
   },
   experiences: {
     type: Array,

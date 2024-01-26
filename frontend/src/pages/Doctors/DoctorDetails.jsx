@@ -25,6 +25,8 @@ const DoctorDetails = () => {
     error,
   } = useFetchData(`${BASE_URL}/doctors/${id}`);
 
+  console.log(doctor)
+
   return (
     <section className="py-20">
       {loading && !error && <Loading />}
@@ -53,7 +55,7 @@ const DoctorDetails = () => {
                       <img src={starIcon} alt="start icon" />
                     </span>
                     <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-[400] text-textColor">
-                      {doctor.totalRating}
+                      {doctor.averageRating?.toFixed(2)}
                     </span>
                   </div>
                   <p className="text__para text-[14px] leading-6 md:text-[15px] lg:max-w-[390px]">
@@ -90,7 +92,7 @@ const DoctorDetails = () => {
             </div>
 
             <div>
-              <SidePanel />
+              <SidePanel doctor={doctor} />
             </div>
           </div>
         </div>

@@ -106,19 +106,6 @@ const Profile = ({ user }) => {
         </div>
         <div className="mb-5">
           <input
-            type="password"
-            placeholder="Enter Your Password"
-            name="password"
-            value={formData.password}
-            onChange={handleInputChange}
-            className="w-full px-4 py-3 border-b border-solid border-[#0066ff61] 
-                    focus:outline-none focus:border-b-primaryColor text-[16px] leading-7
-                    text-headingColor placeholder:text-textColor rounded-md cursor-pointer"
-          />
-        </div>
-
-        <div className="mb-5">
-          <input
             type="text"
             placeholder="Blood Type"
             name="bloodType"
@@ -173,6 +160,15 @@ const Profile = ({ user }) => {
               {selectedFile ? selectedFile.name : "Upload Photo"}
             </label>
           </div>
+          <div className="flex justify-end">
+            <button
+              className="
+               w-50 bg-[#0066ff46] text-headingColor font-semibold text-[15px] leading-[1.2] rounded-lg px-4 py-4"
+              type="submit"
+            >
+              New password
+            </button>
+          </div>
         </div>
         <div className="mt-7">
           <button
@@ -180,7 +176,7 @@ const Profile = ({ user }) => {
             className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-4"
             type="submit"
           >
-            {loading ? <HashLoader size={25} color="#fff" /> : "Update"}
+            {loading ? <HashLoader size={25} color="#fff" /> : "Update Profile"}
           </button>
         </div>
       </form>

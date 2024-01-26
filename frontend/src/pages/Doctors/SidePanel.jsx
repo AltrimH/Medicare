@@ -1,10 +1,13 @@
-const SidePanel = () => {
+const SidePanel = ({doctor}) => {
+
+  const {ticketPrice} = doctor
+
   return (
     <div className="p-3 rounded-md shadow-panelShadow lg:p-5">
       <div className="flex items-center justify-between ">
         <p className="mt-0 font-semibold text__para">Ticket Price</p>
         <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8 text-headingColor font-bold">
-          &euro;500
+          &euro;{ticketPrice}
         </span>
       </div>
 

@@ -2,6 +2,7 @@ import { services } from "../assets/data/services.js";
 import ServiceCard from "../components/Services/ServiceCard";
 
 const Services = () => {
+
   return (
     <section className="px-20 py-20">
       <div className="container">

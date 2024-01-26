@@ -1,20 +1,17 @@
-import {useState, useContext} from 'react'
-import Loading from '../../components/Loader/Loading';
-import Error from '../../components/Error/Error';
-import { authContext } from '../../context/authContext';
+import { useState } from "react";
+import Loading from "../../components/Loader/Loading";
+import Error from "../../components/Error/Error";
 
 import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 
 import Reviews from "./Reviews";
 import Profile from "./Profile";
-import Qualifications from './Qualifications'
-import Experiences from './Experiences'
-import TimeSlots from './TimeSlots'
+import Qualifications from "./Qualifications";
+import Experiences from "./Experiences";
+import TimeSlots from "./TimeSlots";
 
 const Dashboard = () => {
-
-  const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState("reviews");
 
   const {
@@ -23,19 +20,15 @@ const Dashboard = () => {
     error,
   } = useGetProfile(`${BASE_URL}/doctors/profile/me`);
 
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-  };
-
   return (
-    <div className="px-2 mx-auto mt-10 max-w-max">
+    <div className="container">
       {loading && <Loading />}
       {error && <Error errMessage={error} />}
       {!loading && !error && (
-        <div className="grid gap-10 md:grid-cols-3">
-          <div className="pb-[50px] px-[30px] rounded-md bg-primaryColor">
+        <div className="grid mt-10 md:grid-cols-3">
+          <div className="h-full w-3/4 pb-[50px] px-[30px] rounded-md bg-gray-300">
             <div className="flex items-center justify-center mt-10">
-              <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid">
+              <figure className="w-[100px] h-[100px] rounded-full">
                 <img
                   src={userData.photo}
                   alt="User Image"
@@ -44,15 +37,15 @@ const Dashboard = () => {
               </figure>
             </div>
             <div className="mt-4 text-center">
-              <h3 className="text-[18px] leading-[30px] text-white font-bold">
+              <h3 className="text-[18px] leading-[30px] text-headingColor font-bold">
                 {userData.name}
               </h3>
-              <p className="text-white text-[15px] leading-6 font-medium">
+              <p className="text-headingColor text-[15px] leading-6 font-medium">
                 {userData.email}
               </p>
-              <p className="text-white text-[15px] leading-6 font-medium">
+              <p className="text-headingColor text-[15px] leading-6 font-medium">
                 Phone No:
-                <span className="ml-2 text-white text-[20px] leading-8">
+                <span className="ml-2 text-headingColor text-[20px] leading-8">
                   {userData.phone}
                 </span>
               </p>
@@ -60,10 +53,47 @@ const Dashboard = () => {
 
             <div className="mt-[50px] md:mt-[100px]">
               <button
-                onClick={handleLogout}
-                className="w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white"
+                onClick={() => setTab("reviews")}
+                className={`${
+                  tab === "reviews" && "bg-gray-800 text-white rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
               >
-                Logout
+                Reviews
+              </button>
+              <button
+                onClick={() => setTab("settings")}
+                className={`${
+                  tab === "settings" && "bg-gray-800 text-white rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
+              >
+                Profile Settings
+              </button>
+              <button
+                onClick={() => setTab("qualifications")}
+                className={`${
+                  tab === "qualifications" &&
+                  "bg-gray-800 text-white rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
+              >
+                Qualifications
+              </button>
+              <button
+                onClick={() => setTab("experiences")}
+                className={`${
+                  tab === "experiences" &&
+                  "bg-gray-800 text-white rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
+              >
+                Experiences
+              </button>
+              <button
+                onClick={() => setTab("timeSlots")}
+                className={`${
+                  tab === "timeSlots" &&
+                  "bg-gray-800 text-white rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
+              >
+                Time Slots
               </button>
               <button className="w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white">
                 Delete Account
@@ -72,49 +102,6 @@ const Dashboard = () => {
           </div>
 
           <div className="md:col-span-2 md:px-[30px]">
-            <div className="flex items-center gap-7">
-              <button
-                onClick={() => setTab("reviews")}
-                className={`${
-                  tab === "reviews" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Reviews
-              </button>
-              <button
-                onClick={() => setTab("settings")}
-                className={`${
-                  tab === "settings" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Profile Settings
-              </button>
-              <button
-                onClick={() => setTab("qualifications")}
-                className={`${
-                  tab === "qualifications" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Qualifications
-              </button>
-              <button
-                onClick={() => setTab("experiences")}
-                className={`${
-                  tab === "experiences" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Experiences
-              </button>
-              <button
-                onClick={() => setTab("timeSlots")}
-                className={`${
-                  tab === "timeSlots" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
-              >
-                Time Slots
-              </button>
-            </div>
-
             {tab === "reviews" && <Reviews />}
             {tab === "settings" && <Profile doctor={userData} />}
             {tab === "qualifications" && <Qualifications />}
@@ -125,6 +112,6 @@ const Dashboard = () => {
       )}
     </div>
   );
-}
+};
 
-export default Dashboard
+export default Dashboard;

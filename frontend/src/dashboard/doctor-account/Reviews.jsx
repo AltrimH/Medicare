@@ -13,10 +13,6 @@ const Reviews = () => {
     error,
   } = useFetchData(`${BASE_URL}/doctors/reviews/my-reviews`);
 
-  reviews.map((review) => {
-    console.log(review);
-  });
-
   return (
     <div>
       <div className="mt-5"></div>

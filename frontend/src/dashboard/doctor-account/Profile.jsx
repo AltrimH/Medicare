@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 
-import uploadImageToCloudinary from "../../utils/uploadCloudinary.js";
+import uploadImageToCloudinary from "../../utils/uploadCloudinary";
 import HashLoader from "react-spinners/HashLoader.js";
 
 import { useNavigate } from "react-router-dom";
 import { BASE_URL, token } from "../../config.js";
 import { toast } from "react-toastify";
 
-const Profile = ({doctor}) => {
+const Profile = ({ doctor }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -15,8 +15,12 @@ const Profile = ({doctor}) => {
     name: "",
     email: "",
     password: "",
-    photo: null,
+    specialization: "",
     number: "",
+    ticketPrice: "",
+    bio: "",
+    about: "",
+    photo: null,
   });
 
   const navigate = useNavigate();
@@ -25,14 +29,24 @@ const Profile = ({doctor}) => {
     setFormData({
       name: doctor.name,
       email: doctor.email,
-      photo: doctor.photo,
+      password: doctor.password,
       specialization: doctor.specialization,
-      
+      phone: doctor.phone,
+      ticketPrice: doctor.ticketPrice,
+      bio: doctor.bio,
+      about: doctor.about,
+      photo: doctor.photo,
     });
   }, [doctor]);
 
   const handleInputChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+      [e.target.password]: e.target.value,
+      [e.target.phone]: e.target.value,
+      [e.target.tickedPrice]: e.target.value,
+    });
   };
 
   const handleFileInputChange = async (event) => {
@@ -80,16 +94,12 @@ const Profile = ({doctor}) => {
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
-              name="floating_full_name"
-              id="floating_full_name"
+              name="name"
               value={formData.name}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
-              required
             />
             <label
-              // for="floating_full_name"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Full name
@@ -98,18 +108,13 @@ const Profile = ({doctor}) => {
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="email"
-              name="floating_email"
-              id="floating_email"
+              name="email"
               value={formData.email}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
-              disabled
+              readOnly
             />
-            <label
-              // for="floating_email"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Email address
             </label>
           </div>
@@ -118,34 +123,12 @@ const Profile = ({doctor}) => {
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="text"
-              name="floating_password"
-              id="floating_password"
-              value={formData.password}
-              onChange={handleInputChange}
-              className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
-            />
-            <label
-              // for="floating_ticked_number"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Enter your new password
-            </label>
-          </div>
-          <div className="relative z-0 w-full mb-5 group">
-            <input
-              type="text"
-              name="floating_specialization"
-              id="floating_specialization"
+              name="specialization"
               value={formData.specialization}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
             />
-            <label
-              // for="floating_ticked_number"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Specialization
             </label>
           </div>
@@ -154,38 +137,26 @@ const Profile = ({doctor}) => {
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="tel"
-              pattern="[0-9]{3}-[0-9]{3}-[0-9]{3}"
-              name="floating_phone"
-              id="floating_phone"
+              pattern="[0-9]{3}[0-9]{3}[0-9]{3}"
+              name="phone"
               value={formData.phone}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
-              required
             />
-            <label
-              // for="floating_phone"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
-              Phone number (+3834*-***-***)
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
+              Phone number (04*-***-***)
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
             <input
               type="number"
               min={0}
-              name="floating_ticked_number"
-              id="floating_ticked_number"
+              name="ticketPrice"
               value={formData.ticketPrice}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
-              required
             />
-            <label
-              // for="floating_ticked_number"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Ticket Price (Ex. $200)
             </label>
           </div>
@@ -193,33 +164,27 @@ const Profile = ({doctor}) => {
         <div className="grid md:grid-cols-2 md:gap-6">
           <div className="relative z-0 w-full mb-5 group">
             <textarea
-              name="floating_bio"
-              id="floating_bio"
+              rows={1}
+              maxLength={500}
+              name="bio"
               value={formData.bio}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
             />
-            <label
-              // for="floating_ticked_number"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               Bio
             </label>
           </div>
           <div className="relative z-0 w-full mb-5 group">
             <textarea
-              name="floating_about"
-              id="floating_about"
+              rows={1}
+              maxLength={500}
+              name="about"
               value={formData.about}
               onChange={handleInputChange}
               className="block py-2.5 px-0 w-full text-sm bg-transparent border-0 border-b-2 border-gray-300 appearance-none   dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-400 peer"
-              placeholder=" "
             />
-            <label
-              // for="floating_qualifications"
-              className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-            >
+            <label className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
               About
             </label>
           </div>
@@ -239,6 +204,14 @@ const Profile = ({doctor}) => {
             >
               {selectedFile ? selectedFile.name : "Upload Photo"}
             </label>
+          </div>
+          <div className="flex justify-end">
+            <a
+              className="
+               w-50 bg-[#0066ff46] cursor-pointer text-headingColor font-semibold text-[15px] leading-5 rounded-lg px-4 py-4"
+            >
+              New password
+            </a>
           </div>
         </div>
         <div className="mt-7">

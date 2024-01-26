@@ -1,6 +1,7 @@
 import Doctor from "../models/DoctorSchema.js";
 import Booking from "../models/BookingSchema.js";
 import Reviews from "../models/ReviewSchema.js";
+import Qualification from "../models/QualificationSchema.js";
 
 export const getDoctors = async (req, res) => {
   try {
@@ -56,7 +57,11 @@ export const getDoctor = async (req, res) => {
 };
 
 export const updateDoctor = async (req, res) => {
+  const { name, specialization, phone, tickedNumber, bio, about, photo } =
+    req.body;
   const id = req.params.id;
+
+  // hash new password
 
   try {
     const updateDoctor = await Doctor.findByIdAndUpdate(
@@ -127,16 +132,55 @@ export const myReviews = async (req, res) => {
   try {
     // retrieve reviews from reviews for a specific doctor
     const reviews = await Reviews.find({ doctor: req.userId });
-    
+
     res.status(200).json({
       success: true,
       message: "Reviews are getting",
-      data: reviews
+      data: reviews,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong, cannot get",
+    });
+  }
+};
+
+export const myQualifications = async (req, res) => {
+  try {
+    console.log(req.userId)
+    const qualifications = await Qualification.find({ doctor: req.userId });
+
+    res.status(200).json({
+      success: true,
+      message: "Qualifications are getting",
+      data: qualifications
     })
   } catch (error) {
     res.status(400).json({
       success: false,
-      message: "Something went wrong, cannot get"
-    })
+      message: "Something went wrong, cannot get",
+    });
   }
 };
+
+// export const addQualification = async (req, res) => {
+//   try {
+//     // const { school, location, degree, fieldStudy } = req.body;
+//     const qualification = await Doctor.findByIdAndUpdate(
+//       { doctor: req.userId },
+//       { $set: { qualifications: req.body } }
+//     );
+
+//     res.status(200).json({
+//       success: true,
+//       message: "Successfully Added Qualification for Doctor",
+//       data: qualification,
+//     });
+//   } catch (error) {
+//     res.status(400).json({
+//       success: false,
+//       message: "Something went wrong, cannot add",
+//     });
+//   }
+// };

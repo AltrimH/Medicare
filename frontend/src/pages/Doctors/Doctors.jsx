@@ -8,8 +8,15 @@ import Loading from "../../components/Loader/Loading.jsx";
 // import { doctors } from "../../assets/data/doctors.js";
 
 import Testimonial from "../../components/Testimonial/Testimonial";
+import { useLocation } from "react-router-dom";
 
 const Doctors = () => {
+
+  const location = useLocation()
+  location.pathname
+
+  console.log(location)
+
   const {
     data: doctors,
     loading,
@@ -41,7 +48,7 @@ const Doctors = () => {
           <div className="container">
             <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
               {doctors.map((doctor) => (
-                <DoctorCard key={doctor.id} doctor={doctor} />
+                <DoctorCard key={doctor.id} doctor={doctor} location={location} />
               ))}
             </div>
           </div>

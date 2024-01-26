@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import { BsArrowRight } from "react-icons/bs";
 
@@ -21,6 +21,12 @@ import FaqList from "../components/Faq/FaqList";
 import Testimonial from '../components/Testimonial/Testimonial'
 
 const Home = () => {
+
+  const location = useLocation()
+  location.pathname
+
+  console.log(location)
+
   return (
     <>
       {/* hero section */}
@@ -264,7 +270,7 @@ const Home = () => {
               expert health care.
             </p>
           </div>
-          <DoctorList />
+          <DoctorList location={location} />
         </div>
       </section>
       {/* our great doctors end */}

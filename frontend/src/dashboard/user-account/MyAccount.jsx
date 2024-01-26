@@ -1,5 +1,4 @@
-import { useContext, useState } from "react";
-import { authContext } from "./../../context/authContext";
+import { useState } from "react";
 
 import MyBookings from "./MyBookings";
 import Profile from "./Profile";
@@ -10,7 +9,6 @@ import useGetProfile from "../../hooks/useFetchData";
 import { BASE_URL } from "../../config";
 
 const MyAccount = () => {
-  const { dispatch } = useContext(authContext);
   const [tab, setTab] = useState("bookings");
 
   const {
@@ -19,19 +17,15 @@ const MyAccount = () => {
     error,
   } = useGetProfile(`${BASE_URL}/users/profile/me`);
 
-  const handleLogout = () => {
-    dispatch({ type: "LOGOUT" });
-  };
-
   return (
-    <div className="max-w-[1170px] px-5 mx-auto mt-10">
+    <div className="container">
       {loading && <Loading />}
       {error && <Error errMessage={error} />}
       {!loading && !error && (
-        <div className="grid gap-10 md:grid-cols-3">
-          <div className="pb-[50px] px-[30px] rounded-md bg-primaryColor">
+        <div className="grid mt-10 md:grid-cols-3">
+          <div className="h-full w-3/4 pb-[50px] px-[30px] rounded-md bg-gray-300">
             <div className="flex items-center justify-center mt-10">
-              <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid">
+              <figure className="w-[100px] h-[100px] rounded-full">
                 <img
                   src={userData.photo}
                   alt="User Image"
@@ -40,15 +34,15 @@ const MyAccount = () => {
               </figure>
             </div>
             <div className="mt-4 text-center">
-              <h3 className="text-[18px] leading-[30px] text-white font-bold">
+              <h3 className="text-[18px] leading-[30px] text-headingColor font-bold">
                 {userData.name}
               </h3>
-              <p className="text-white text-[15px] leading-6 font-medium">
+              <p className="text-headingColor text-[15px] leading-6 font-medium">
                 {userData.email}
               </p>
-              <p className="text-white text-[15px] leading-6 font-medium">
+              <p className="text-headingColor text-[15px] leading-6 font-medium">
                 Blood Type:
-                <span className="ml-2 text-white text-[20px] leading-8">
+                <span className="ml-2 text-headingColor text-[20px] leading-8">
                   {userData.bloodType}
                 </span>
               </p>
@@ -56,37 +50,28 @@ const MyAccount = () => {
 
             <div className="mt-[50px] md:mt-[100px]">
               <button
-                onClick={handleLogout}
-                className="w-full bg-[#181A1E] p-3 text-[16px] leading-7 rounded-md text-white"
-              >
-                Logout
-              </button>
-              <button className="w-full bg-red-600 mt-4 p-3 text-[16px] leading-7 rounded-md text-white">
-                Delete Account
-              </button>
-            </div>
-          </div>
-
-          <div className="md:col-span-2 md:px-[30px]">
-            <div className="flex items-center gap-7">
-              <button
                 onClick={() => setTab("bookings")}
                 className={`${
-                  tab === "bookings" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  tab === "bookings" && " bg-gray-800 text-gray-100 rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
               >
                 My Bookings
               </button>
               <button
                 onClick={() => setTab("settings")}
                 className={`${
-                  tab === "settings" && "bg-primaryColor text-white font-normal"
-                } py-2 px-5 rounded-md text-headingColor font-semibold text-[16px] leading-7 border border-solid border-primaryColor`}
+                  tab === "settings" && " bg-gray-800 text-gray-100 rounded-lg py-2 font-normal"
+                } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border- border-headingColor`}
               >
-                Profile Settings
+                Profile
+              </button>
+              <button className="w-full bg-red-600 mt-20 p-3 text-[16px] leading-7 rounded-md text-white">
+                Delete Account
               </button>
             </div>
+          </div>
 
+          <div className="md:col-span-2 md:px-[30px]">
             {tab === "bookings" && <MyBookings />}
             {tab === "settings" && <Profile user={userData} />}
           </div>
