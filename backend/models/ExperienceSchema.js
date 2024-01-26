@@ -1,24 +1,16 @@
 import mongoose from "mongoose";
 
-const qualificationSchema = new mongoose.Schema(
+const experienceSchema = new mongoose.Schema(
   {
     doctor: {
       type: mongoose.Types.ObjectId,
       ref: "Doctor",
     },
-    school: {
+    hospital: {
       type: String,
       required: true,
     },
     location: {
-      type: String,
-      required: true,
-    },
-    degree: {
-      type: String,
-      required: true,
-    },
-    fieldStudy: {
       type: String,
       required: true,
     },
@@ -36,13 +28,13 @@ const qualificationSchema = new mongoose.Schema(
   }
 );
 
-qualificationSchema.pre(/^find/, function (next) {
+experienceSchema.pre(/^find/, function (next) {
   this.populate({
     path: "doctor",
-    select: "name photo about bio",
+    select: "name photo phone about",
   });
 
   next();
 });
 
-export default mongoose.model("Qualification", qualificationSchema);
+export default mongoose.model("Experience", experienceSchema);

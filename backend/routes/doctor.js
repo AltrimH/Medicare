@@ -6,7 +6,8 @@ import {
   deleteDoctor,
   getDoctorProfile,
   myReviews,
-  myQualifications
+  myQualifications,
+  myExperience,
 } from "../controllers/doctorController.js";
 
 import reviewRouter from "./review.js";
@@ -36,6 +37,12 @@ router.get(
   authenticate,
   restrict(["doctor"]),
   myQualifications
+);
+router.get(
+  "/experiences/my-experience",
+  authenticate,
+  restrict(["doctor"]),
+  myExperience
 );
 
 export default router;

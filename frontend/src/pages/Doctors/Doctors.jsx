@@ -15,8 +15,6 @@ const Doctors = () => {
   const location = useLocation()
   location.pathname
 
-  console.log(location)
-
   const {
     data: doctors,
     loading,

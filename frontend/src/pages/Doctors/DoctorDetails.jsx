@@ -25,7 +25,6 @@ const DoctorDetails = () => {
     error,
   } = useFetchData(`${BASE_URL}/doctors/${id}`);
 
-  console.log(doctor)
 
   return (
     <section className="py-20">

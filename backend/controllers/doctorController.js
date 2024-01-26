@@ -2,6 +2,7 @@ import Doctor from "../models/DoctorSchema.js";
 import Booking from "../models/BookingSchema.js";
 import Reviews from "../models/ReviewSchema.js";
 import Qualification from "../models/QualificationSchema.js";
+import Experience from "../models/ExperienceSchema.js";
 
 export const getDoctors = async (req, res) => {
   try {
@@ -148,14 +149,13 @@ export const myReviews = async (req, res) => {
 
 export const myQualifications = async (req, res) => {
   try {
-    console.log(req.userId)
     const qualifications = await Qualification.find({ doctor: req.userId });
 
     res.status(200).json({
       success: true,
       message: "Qualifications are getting",
-      data: qualifications
-    })
+      data: qualifications,
+    });
   } catch (error) {
     res.status(400).json({
       success: false,
@@ -164,23 +164,19 @@ export const myQualifications = async (req, res) => {
   }
 };
 
-// export const addQualification = async (req, res) => {
-//   try {
-//     // const { school, location, degree, fieldStudy } = req.body;
-//     const qualification = await Doctor.findByIdAndUpdate(
-//       { doctor: req.userId },
-//       { $set: { qualifications: req.body } }
-//     );
+export const myExperience = async (req, res) => {
+  try {
+    const experiences = await Experience.find({ doctor: req.userId });
 
-//     res.status(200).json({
-//       success: true,
-//       message: "Successfully Added Qualification for Doctor",
-//       data: qualification,
-//     });
-//   } catch (error) {
-//     res.status(400).json({
-//       success: false,
-//       message: "Something went wrong, cannot add",
-//     });
-//   }
-// };
+    res.status(200).json({
+      success: true,
+      message: "Experiences are getting",
+      data: experiences,
+    });
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: "Something went wrong, cannot get",
+    });
+  }
+};
