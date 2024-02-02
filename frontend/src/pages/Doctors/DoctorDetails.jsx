@@ -17,14 +17,13 @@ import { useParams } from "react-router-dom";
 const DoctorDetails = () => {
   const [tab, setTab] = useState("about");
 
-  const { id } = useParams()
+  const { id } = useParams();
 
   const {
     data: doctor,
     loading,
     error,
   } = useFetchData(`${BASE_URL}/doctors/${id}`);
-
 
   return (
     <section className="py-20">
@@ -86,7 +85,7 @@ const DoctorDetails = () => {
 
               <div className="mt-[50px]">
                 {tab === "about" && <DoctorAbout doctor={doctor} />}
-                {tab === "feedback" && <Feedback  doctor={doctor} />}
+                {tab === "feedback" && <Feedback doctor={doctor} />}
               </div>
             </div>
 

@@ -39,7 +39,7 @@ router.get(
   myQualifications
 );
 router.get(
-  "/experiences/my-experience",
+  "/experiences/my-experience/:id",
   authenticate,
   restrict(["doctor"]),
   myExperience

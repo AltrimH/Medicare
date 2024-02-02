@@ -8,7 +8,7 @@ const DoctorAbout = ({ doctor }) => {
   );
 
   const { data: experiences } = useFetchData(
-    `${BASE_URL}/doctors/experiences/my-experience`
+    `${BASE_URL}/doctors/experiences/my-experience/${doctor._id}`
   );
 
   return (
@@ -36,8 +36,8 @@ const DoctorAbout = ({ doctor }) => {
                   >
                     <div>
                       <span className="text-irisBlueColor text-[15px] leading-6 font-semibold">
-                        {formateDate("04-23-2010")} -{" "}
-                        {formateDate("10-06-2013")}
+                        {formateDate(qualification.startingDate)} -{" "}
+                        {formateDate(qualification.endingDate)}
                       </span>
                       <p className="text-[16px] leading-6 font-medium text-textColor">
                         {qualification.degree} in {qualification.fieldStudy}

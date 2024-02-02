@@ -52,7 +52,7 @@ const MyAccount = () => {
               <button
                 onClick={() => setTab("bookings")}
                 className={`${
-                  tab === "bookings" && " bg-gray-800 text-gray-100 rounded-lg py-2 font-normal"
+                  tab === "bookings" && " bg-gray-800 text-white rounded-lg py-2 font-normal"
                 } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border-headingColor`}
               >
                 My Bookings
@@ -60,7 +60,7 @@ const MyAccount = () => {
               <button
                 onClick={() => setTab("settings")}
                 className={`${
-                  tab === "settings" && " bg-gray-800 text-gray-100 rounded-lg py-2 font-normal"
+                  tab === "settings" && " bg-gray-800 text-white rounded-lg py-2 font-normal"
                 } w-full px-1 mb-5 text-headingColor font-semibold text-[16px] leading-7 border-b border- border-headingColor`}
               >
                 Profile

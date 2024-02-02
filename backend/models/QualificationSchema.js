@@ -6,6 +6,14 @@ const qualificationSchema = new mongoose.Schema(
       type: mongoose.Types.ObjectId,
       ref: "Doctor",
     },
+    startingDate: {
+        type: Date,
+        required: true
+    },
+    endingDate: {
+        type: Date,
+        required: true
+    },
     school: {
       type: String,
       required: true,
@@ -22,14 +30,6 @@ const qualificationSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    // dateFrom: {
-    //     type: Date,
-    //     required: true
-    // },
-    // dateEnd: {
-    //     type: Date,
-    //     required: true
-    // }
   },
   {
     timestamps: true,

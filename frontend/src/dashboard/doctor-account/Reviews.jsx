@@ -15,20 +15,17 @@ const Reviews = () => {
 
   return (
     <div>
-      <div className="mt-5"></div>
       {loading && !error && <Loading />}
       {error && !loading && <Error errMessage={error} />}
-      {!loading && !error && (
-        <div className="">
-          <div className="flex items-center justify-center gap-10 m-5 border-b-2 text-[#333333]">
-            <h2>Review Text</h2>
-            <h2>|</h2>
-            <h2>Rating</h2>
-          </div>
-          <div className="h-[400px] overflow-y-scroll">
-          {reviews.map((review) => (
-            <ReviewList review={review} key={review.id} />
-          ))}
+      {!loading && !error && reviews.length > 0 && (
+        <div className="rounded-lg shadow-2xl p-7">
+          <h2 className="text-headingColor font-bold text-[24px] leading-9 mb-10">
+            Review Info
+          </h2>
+          <div className="h-[440px] overflow-y-auto">
+            {reviews.map((review) => (
+              <ReviewList review={review} key={review.id} />
+            ))}
           </div>
         </div>
       )}

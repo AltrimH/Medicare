@@ -67,8 +67,7 @@ export const updateDoctor = async (req, res) => {
   try {
     const updateDoctor = await Doctor.findByIdAndUpdate(
       id,
-      { $set: req.body },
-      { new: true }
+      { $set: req.body }
     );
 
     res.status(200).json({
@@ -166,7 +165,8 @@ export const myQualifications = async (req, res) => {
 
 export const myExperience = async (req, res) => {
   try {
-    const experiences = await Experience.find({ doctor: req.userId });
+
+    const experiences = await Experience.find({ doctor: req.params.id });
 
     res.status(200).json({
       success: true,
