@@ -6,7 +6,9 @@ import User from "../models/UserSchema.js";
 
 export const authenticate = async (req, res, next) => {
   // get token from headers
-  const authToken = req.headers.authorization;
+  const authToken = req.headers.Authorization || req.headers.authorization;
+
+  console.log(authToken)
 
   // check token if it exists
   if (!authToken || !authToken.startsWith("Bearer ")) {
@@ -40,7 +42,7 @@ export const authenticate = async (req, res, next) => {
 };
 
 export const restrict = (roles) => async (req, res, next) => {
-  const userId = req.userId;
+  const userId = req.user.id;
   let user;
 
   const admin = await Admin.findById(userId);

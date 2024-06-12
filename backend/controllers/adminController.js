@@ -1,26 +1,7 @@
 import User from "../models/UserSchema.js";
-import Booking from "../models/BookingSchema.js";
-import Doctor from "../models/DoctorSchema.js";
 import Admin from "../models/AdminSchema.js";
 
 import bcrypt from "bcryptjs";
-
-export const getAdmins = async (req, res) => {
-  try {
-    const admins = await Admin.find({}).select("-password");
-
-    res.status(200).json({
-      success: true,
-      message: "Admins were found",
-      data: admins,
-    });
-  } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: "Error: Admins not found",
-    });
-  }
-};
 
 export const getAdmin = async (req, res) => {
   const id = req.params.id;
@@ -37,6 +18,91 @@ export const getAdmin = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Admin was not found",
+    });
+  }
+};
+
+export const getAdmins = async (req, res) => {
+  try {
+    const admins = await User.find({role: 'admin', role: 'superadmin'}).select("-password");
+
+    if(admins.length === 0){
+      return res.status(401).json({
+        success:false,
+        message: "There are no admins"
+      })
+    }else{
+      return res.status(200).json({
+        success: true,
+        message: "Admins were found",
+        data: admins,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error: Admins not found",
+    });
+  }
+};
+
+export const createAdmin = async (req, res) => {
+  try {
+    const emailExists = await User.findOne({
+      where: { email: req.body.email },
+    });
+    if (emailExists) {
+      return res
+        .status(400)
+        .json({ success: false, message: "This email already exists" });
+    }
+
+    let {
+      name,
+      surname,
+      email,
+      password,
+      role,
+      photo,
+      address,
+      city,
+      country,
+      phoneNumber,
+      gender,
+    } = req.body;
+
+    const user = {
+      name,
+      surname,
+      email,
+      password,
+      role,
+    };
+    const admin = {
+      photo,
+      address,
+      city,
+      country,
+      phoneNumber,
+      gender,
+    };
+
+    const salt = await bcrypt.genSalt(10);
+    const hashPassword = await bcrypt.hash(user.password, salt);
+    user.password = hashPassword;
+
+    const registeredUser = await User.create(user);
+    const registeredAdmin = await Admin.create(admin);
+
+    return res.status(200).json({
+      success: true,
+      registeredAdmin: [registeredUser, registeredAdmin],
+      message: "Admin is registered",
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Internal server error",
     });
   }
 };

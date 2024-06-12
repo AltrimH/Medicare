@@ -4,13 +4,13 @@ import {
   createReview,
 } from "../controllers/reviewController.js";
 
-import { authenticate, restrict } from "./../auth/verifyToken.js";
+import { auth, restrict } from "../middleware/auth.js";
 
 const router = express.Router({ mergeParams: true });
 
 router
   .route("/")
   .get(getAllReviews)
-  .post(authenticate, restrict(["patient"]), createReview);
+  .post(auth, restrict(["patient"]), createReview);
 
 export default router;

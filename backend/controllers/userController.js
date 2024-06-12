@@ -1,8 +1,22 @@
 import User from "../models/UserSchema.js";
+import Admin from "../models/AdminSchema.js";
+import Patient from "../models/PatientsSchema.js";
 import Booking from "../models/BookingSchema.js";
 import Doctor from "../models/DoctorSchema.js";
 
-import bcrypt from "bcryptjs";
+export const getProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id).select("-password");
+
+    res.status(200).json({
+      success: true,
+      message: "Profile data...",
+      data: user,
+    });
+  } catch (error) {
+    res.json({ success: false, message: "Error: " + error.message });
+  }
+};
 
 export const getUsers = async (req, res) => {
   try {
@@ -10,22 +24,22 @@ export const getUsers = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: "Users were found",
+      message: "All users/patients were found",
       data: users,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Error: Users not found",
+      message: "Error: users/patients were not found",
     });
   }
 };
 
 export const getUser = async (req, res) => {
-  const id = req.params.id;
+  const userId = req.params.id;
 
   try {
-    const singleUser = await User.findById(id).select("-password");
+    const singleUser = await User.findById(userId).select("-password");
 
     res.status(200).json({
       success: true,
@@ -40,24 +54,27 @@ export const getUser = async (req, res) => {
   }
 };
 
+// update user -> setup-profile page
 export const updateUser = async (req, res) => {
   const id = req.params.id;
-  console.log(id)
+  const role = "patient";
 
-  // const salt = await bcrypt.genSalt(10);
-  // const hashPassword = await bcrypt.hash(password, salt);
+  const { photo, address, city, country, phoneNumber, gender } = req.body;
 
   try {
-    const updateUser = await User.findByIdAndUpdate(
-      id,
-      // { $set: { password: hashPassword} },
-      { $set: req.body },
-      { new: true }
-    );
+    const updateUser = await User.findByIdAndUpdate(id, {
+      role,
+      photo,
+      address,
+      city,
+      country,
+      phoneNumber,
+      gender,
+    });
 
     res.status(200).json({
       success: true,
-      message: "Successfully user updated",
+      message: "User successfully updated",
       data: updateUser,
     });
   } catch (error) {
@@ -69,45 +86,21 @@ export const updateUser = async (req, res) => {
 };
 
 export const deleteUser = async (req, res) => {
-  const id = req.params.id;
+  const userId = req.params.id;
 
   try {
-    const deleteUser = await User.findByIdAndDelete(id);
+    const deleteUser = await User.findByIdAndDelete(userId);
 
     res.status(200).json({
       success: true,
-      message: "Successfully user deleted",
+      message: "Successfully deleted user/patient",
       data: deleteUser,
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: "Failed to delete user",
+      message: "Failed to delete user/patient",
     });
-  }
-};
-
-export const getUserProfile = async (req, res) => {
-  const userId = req.userId;
-
-  try {
-    const user = await User.findById(userId);
-    if (!user) {
-      return res
-        .status(404)
-        .json({ success: false, message: "User not found" });
-    }
-
-    const { password, ...rest } = user._doc;
-    res.status(200).json({
-      success: true,
-      message: "Profile info is getting",
-      data: { ...rest },
-    });
-  } catch (error) {
-    res
-      .status(500)
-      .json({ success: false, message: "Something went wrong, cannot get" });
   }
 };
 

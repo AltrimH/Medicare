@@ -7,9 +7,9 @@ const bookingSchema = new mongoose.Schema(
       ref: "Doctor",
       required: true,
     },
-    user: {
+    patient: {
       type: mongoose.Types.ObjectId,
-      ref: "User",
+      ref: "Patient",
       required: true,
     },
     ticketPrice: { type: String, required: true },

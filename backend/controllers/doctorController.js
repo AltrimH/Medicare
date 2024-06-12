@@ -6,27 +6,29 @@ import Experience from "../models/ExperienceSchema.js";
 
 export const getDoctors = async (req, res) => {
   try {
-    const { query } = req.query;
-    let doctors;
+    // const { query } = req.query;
+    // let doctors;
 
-    if (query) {
-      doctors = await Doctor.find({
-        isApproved: "approved",
-        $or: [
-          { name: { $regex: query, $options: "i" } },
-          { specialization: { $regex: query, $options: "i" } },
-        ],
-      }).select("-password");
-    } else {
-      doctors = await Doctor.find({ isApproved: "approved" }).select(
-        "-password"
-      );
-    }
+    // if (query) {
+    //   doctors = await Doctor.find({
+    //     isApproved: "approved",
+    //     $or: [
+    //       { name: { $regex: query, $options: "i" } },
+    //       { specialization: { $regex: query, $options: "i" } },
+    //     ],
+    //   }).select("-password");
+    // } else {
+    //   doctors = await Doctor.find({ isApproved: "approved" }).select(
+    //     "-password"
+    //   );
+    // }
+
+    const doctors = await Doctor.find({});
 
     res.status(200).json({
       success: true,
       message: "Doctors were found",
-      data: doctors,
+      doctors: doctors,
     });
   } catch (error) {
     res.status(500).json({
